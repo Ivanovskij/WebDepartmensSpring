@@ -58,7 +58,7 @@ public class EmployeeServiceDAOImpl implements EmployeeServiceDAO {
     }
 
     public List<Employee> list() {
-        String query = "select * from EMPLOYEES";
+        String query = "select * from EMPLOYEES order by IDEMPLOYEES";
         List<Employee> employees = this.jdbcTemplate.query(query, new EmployeeMapper());
         return employees;
     }
@@ -77,7 +77,7 @@ public class EmployeeServiceDAOImpl implements EmployeeServiceDAO {
 
     @Override
     public List<Employee> search(Date dateOfBirth) {
-        String query = "select * from EMPLOYEES where DATE_OF_BIRTH = ?";
+        String query = "select * from EMPLOYEES where DATE_OF_BIRTH = ? order by IDEMPLOYEES";
 
         List<Employee> employees = this.jdbcTemplate.query(query, new Object[]{dateOfBirth}, new EmployeeMapper());
         return employees;
@@ -86,7 +86,7 @@ public class EmployeeServiceDAOImpl implements EmployeeServiceDAO {
 
     @Override
     public List<Employee> searchBetweenDates(Date from, Date to) {
-        String query = "select * from EMPLOYEES where DATE_OF_BIRTH between ? and ?";
+        String query = "select * from EMPLOYEES where DATE_OF_BIRTH between ? and ? order by IDEMPLOYEES";
 
         List<Employee> employees = this.jdbcTemplate.query(query, new Object[]{from, to}, new EmployeeMapper());
         return employees;

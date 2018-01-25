@@ -58,7 +58,7 @@ public class DepartmentServiceDAOImpl implements DepartmentServiceDAO {
 
     @Override
     public List<Department> list() {
-        String query = "select * from DEPARTMENTS";
+        String query = "select * from DEPARTMENTS order by IDDEPARTMENTS";
         List<Department> departments = jdbcTemplate.query(query, new DepartmentMapper());
         return departments;
     }
