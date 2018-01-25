@@ -1,5 +1,6 @@
 package com.ivo.webclient.mvc.rest;
 
+import com.ivo.webclient.mvc.exception.CustomException;
 import com.ivo.webclient.mvc.model.Employee;
 import com.ivo.webclient.mvc.service.EmployeeService;
 import org.slf4j.Logger;
@@ -23,14 +24,12 @@ public class EmployeeTemplateController {
     EmployeeService employeeService;
 
     @RequestMapping(value = "/{employeeId}", method = RequestMethod.GET, headers = "Accept=application/json")
-    @ResponseStatus(HttpStatus.OK)
     public ModelAndView read(@PathVariable int employeeId) {
         Employee employee = employeeService.read(employeeId);
         return new ModelAndView("/employee/read", "result", employee);
     }
 
     @RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json")
-    @ResponseStatus(HttpStatus.OK)
     public ModelAndView list() {
         List<Employee> employees = employeeService.list();
 
@@ -52,7 +51,6 @@ public class EmployeeTemplateController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    @ResponseStatus(HttpStatus.OK)
     public String createEmployee(Employee employee) {
         logger.debug("called createEmployee, method POST");
         employeeService.create(employee);
@@ -72,7 +70,6 @@ public class EmployeeTemplateController {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.PUT, headers = "Accept=application/json")
-    @ResponseStatus(HttpStatus.OK)
     public void updateDepartment(@RequestBody Employee employee) {
         logger.debug("called updateDepartment, method PUT");
         employeeService.update(employee);
@@ -92,7 +89,6 @@ public class EmployeeTemplateController {
     }
 
     @RequestMapping(value = "/delete/{employeeId}", method = RequestMethod.DELETE)
-    @ResponseStatus(HttpStatus.OK)
     public String deleteDepartment(@PathVariable(value = "employeeId") int employeeId) {
         logger.debug("called deleteDepartment, method DELETE");
         employeeService.delete(employeeId);
@@ -100,7 +96,6 @@ public class EmployeeTemplateController {
     }
 
     @RequestMapping(value = "/search/{dateOfBirth}", method = RequestMethod.GET)
-    @ResponseStatus(HttpStatus.OK)
     public ModelAndView search(@PathVariable("dateOfBirth")Date dateOfBirth) {
         logger.debug("called search, search by date: " + dateOfBirth);
 
@@ -116,7 +111,6 @@ public class EmployeeTemplateController {
     }
 
     @RequestMapping(value = "/search/{from}/{to}", method = RequestMethod.GET)
-    @ResponseStatus(HttpStatus.OK)
     public ModelAndView search(@PathVariable("from")Date from,
                                @PathVariable("to")Date to) {
         logger.debug("called search, search by date, from: " + from
@@ -133,11 +127,19 @@ public class EmployeeTemplateController {
         return mv;
     }
 
-    @ExceptionHandler
-    @ResponseStatus(value = HttpStatus.FORBIDDEN, reason = "FORBIDDEN ACCESS (PROVIDE YOUR CUSTOM REASON HERE)")
-    public void handleException(Exception ex) {
-        System.out.println("@RestTemplateControllerExample handleException");
-        System.out.println(ex);
+    @ExceptionHandler(CustomException.class)
+    public ModelAndView handleCustomException(CustomException ex) {
+        ModelAndView mv = new ModelAndView("/errors/error");
+        mv.addObject("errCode", ex.getErrCode());
+        mv.addObject("errMsg", ex.getErrMsg());
+        return mv;
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ModelAndView handleAllException(Exception ex) {
+        ModelAndView mv = new ModelAndView("/errors/error");
+        mv.addObject("errMsg", ex.getMessage());
+        return mv;
     }
 
 }

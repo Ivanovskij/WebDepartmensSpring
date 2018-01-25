@@ -1,5 +1,6 @@
 package com.ivo.webclient.mvc.rest;
 
+import com.ivo.webclient.mvc.exception.CustomException;
 import com.ivo.webclient.mvc.model.AvgSalary;
 import com.ivo.webclient.mvc.model.Department;
 import com.ivo.webclient.mvc.service.DepartmentService;
@@ -23,14 +24,12 @@ public class DepartmentTemplateController {
     DepartmentService departmentService;
 
     @RequestMapping(value = "/{departmentId}", method = RequestMethod.GET, headers = "Accept=application/json")
-    @ResponseStatus(HttpStatus.OK)
     public ModelAndView read(@PathVariable int departmentId) {
         Department department = departmentService.read(departmentId);
         return new ModelAndView("/department/read", "result", department);
     }
 
     @RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json")
-    @ResponseStatus(HttpStatus.OK)
     public ModelAndView list() {
         List<Department> departments = departmentService.list();
 
@@ -52,7 +51,6 @@ public class DepartmentTemplateController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    @ResponseStatus(HttpStatus.OK)
     public String createDepartment(Department department) {
         logger.debug("called createDepartment, method POST");
         departmentService.create(department);
@@ -72,7 +70,6 @@ public class DepartmentTemplateController {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.PUT, headers = "Accept=application/json")
-    @ResponseStatus(HttpStatus.OK)
     public void updateDepartment(@RequestBody Department department) {
         logger.debug("called updateDepartment, method PUT");
         departmentService.update(department);
@@ -92,7 +89,6 @@ public class DepartmentTemplateController {
     }
 
     @RequestMapping(value = "/delete/{departmentId}", method = RequestMethod.DELETE)
-    @ResponseStatus(HttpStatus.OK)
     public String deleteDepartment(@PathVariable(value = "departmentId") int departmentId) {
         logger.debug("called deleteDepartment, method DELETE");
         departmentService.delete(departmentId);
@@ -100,7 +96,6 @@ public class DepartmentTemplateController {
     }
 
     @RequestMapping(value = "averageSalary", method = RequestMethod.GET, headers = "Accept=application/json")
-    @ResponseStatus(HttpStatus.OK)
     public ModelAndView averageSalary() {
         logger.debug("called averageSalary, method GET");
 
@@ -115,11 +110,19 @@ public class DepartmentTemplateController {
         return mv;
     }
 
-    @ExceptionHandler
-    @ResponseStatus(value = HttpStatus.FORBIDDEN, reason = "FORBIDDEN ACCESS")
-    public void handleException(Exception ex) {
-        System.out.println("@DepartmentTemplateController handleException");
-        System.out.println(ex);
+    @ExceptionHandler(CustomException.class)
+    public ModelAndView handleCustomException(CustomException ex) {
+        ModelAndView mv = new ModelAndView("errors/error");
+        mv.addObject("errCode", ex.getErrCode());
+        mv.addObject("errMsg", ex.getErrMsg());
+        return mv;
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ModelAndView handleAllException(Exception ex) {
+        ModelAndView mv = new ModelAndView("errors/error");
+        mv.addObject("errMsg", ex.getMessage());
+        return mv;
     }
 
 

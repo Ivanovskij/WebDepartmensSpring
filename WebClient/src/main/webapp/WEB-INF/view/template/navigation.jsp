@@ -8,7 +8,8 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Home</a>
+            <c:url value="${contextRoot}" var="home"/>
+            <a class="navbar-brand" href="${home}">Home</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
