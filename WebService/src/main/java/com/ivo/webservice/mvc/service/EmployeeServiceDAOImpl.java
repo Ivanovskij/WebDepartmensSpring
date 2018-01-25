@@ -41,7 +41,8 @@ public class EmployeeServiceDAOImpl implements EmployeeServiceDAO {
         String query = "insert into EMPLOYEES (FIO, DATE_OF_BIRTH, SALARY, NAME_DEP) values (?, ?, ?, ?)";
         this.jdbcTemplate.update(new PreparedStatementCreator() {
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement preparedStatement = connection.prepareStatement("insert into EMPLOYEES (FIO, DATE_OF_BIRTH, SALARY, NAME_DEP) values (?, ?, ?, ?)");
+                PreparedStatement preparedStatement =
+                        connection.prepareStatement("insert into EMPLOYEES (FIO, DATE_OF_BIRTH, SALARY, NAME_DEP) values (?, ?, ?, ?)");
                 preparedStatement.setString(1, employee.getFio());
                 preparedStatement.setDate(2, employee.getDateOfBirth());
                 preparedStatement.setInt(3, employee.getSalary());
@@ -77,7 +78,12 @@ public class EmployeeServiceDAOImpl implements EmployeeServiceDAO {
         logger.debug("called method update");
 
         String query = "update EMPLOYEES set FIO = ?, DATE_OF_BIRTH = ?, SALARY = ?, NAME_DEP = ? where IDEMPLOYEES = ?";
-        int result = this.jdbcTemplate.update("update EMPLOYEES set FIO = ?, DATE_OF_BIRTH = ?, SALARY = ?, NAME_DEP = ? where IDEMPLOYEES = ?", new Object[]{employee.getFio(), employee.getDateOfBirth(), employee.getSalary(), employee.getDepartment(), employee.getId()});
+        int result = this.jdbcTemplate.update("update EMPLOYEES set FIO = ?, DATE_OF_BIRTH = ?, SALARY = ?, NAME_DEP = ? where IDEMPLOYEES = ?",
+                new Object[]{employee.getFio(),
+                        employee.getDateOfBirth(),
+                        employee.getSalary(),
+                        employee.getDepartment(),
+                        employee.getId()});
         if (result > 0) {
             logger.debug("update success");
             return true;
@@ -112,6 +118,13 @@ public class EmployeeServiceDAOImpl implements EmployeeServiceDAO {
 
     }
 
+    /**
+     * Example javadoc for method
+     * Method search employees by two dates
+     * @param from - date from search
+     * @param to - date to search
+     * @return List<Employee> employees - all search
+     */
     @Override
     public List<Employee> searchBetweenDates(Date from, Date to) {
         logger.debug("called method searchBetweenDates");
