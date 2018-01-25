@@ -2,6 +2,8 @@ package com.ivo.webclient.mvc.rest;
 
 import com.ivo.webclient.mvc.model.Employee;
 import com.ivo.webclient.mvc.service.EmployeeService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,6 +16,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/employees")
 public class EmployeeTemplateController {
+
+    private static final Logger logger = LoggerFactory.getLogger(EmployeeTemplateController.class);
 
     @Autowired
     EmployeeService employeeService;
@@ -50,7 +54,7 @@ public class EmployeeTemplateController {
     @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public String createEmployee(Employee employee) {
-        System.out.println(employee);
+        logger.debug("called createEmployee, method POST");
         employeeService.create(employee);
         return "/employee/create";
     }
@@ -70,6 +74,7 @@ public class EmployeeTemplateController {
     @RequestMapping(value = "/update", method = RequestMethod.PUT, headers = "Accept=application/json")
     @ResponseStatus(HttpStatus.OK)
     public void updateDepartment(@RequestBody Employee employee) {
+        logger.debug("called updateDepartment, method PUT");
         employeeService.update(employee);
     }
 
@@ -89,6 +94,7 @@ public class EmployeeTemplateController {
     @RequestMapping(value = "/delete/{employeeId}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
     public String deleteDepartment(@PathVariable(value = "employeeId") int employeeId) {
+        logger.debug("called deleteDepartment, method DELETE");
         employeeService.delete(employeeId);
         return "/employee/delete";
     }
@@ -96,6 +102,8 @@ public class EmployeeTemplateController {
     @RequestMapping(value = "/search/{dateOfBirth}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public ModelAndView search(@PathVariable("dateOfBirth")Date dateOfBirth) {
+        logger.debug("called search, search by date: " + dateOfBirth);
+
         List<Employee> employees = employeeService.search(dateOfBirth);
 
         ModelAndView mv = new ModelAndView("/employee/common");
@@ -111,6 +119,9 @@ public class EmployeeTemplateController {
     @ResponseStatus(HttpStatus.OK)
     public ModelAndView search(@PathVariable("from")Date from,
                                @PathVariable("to")Date to) {
+        logger.debug("called search, search by date, from: " + from
+            + " and to: " + to);
+
         List<Employee> employees = employeeService.searchBetweenDates(from, to);
 
         ModelAndView mv = new ModelAndView("/employee/common");

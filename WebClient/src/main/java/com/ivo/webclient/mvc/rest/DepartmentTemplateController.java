@@ -3,6 +3,8 @@ package com.ivo.webclient.mvc.rest;
 import com.ivo.webclient.mvc.model.AvgSalary;
 import com.ivo.webclient.mvc.model.Department;
 import com.ivo.webclient.mvc.service.DepartmentService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,6 +16,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/departments")
 public class DepartmentTemplateController {
+
+    private static final Logger logger = LoggerFactory.getLogger(DepartmentTemplateController.class);
 
     @Autowired
     DepartmentService departmentService;
@@ -50,6 +54,7 @@ public class DepartmentTemplateController {
     @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public String createDepartment(Department department) {
+        logger.debug("called createDepartment, method POST");
         departmentService.create(department);
         return "/department/create";
     }
@@ -69,6 +74,7 @@ public class DepartmentTemplateController {
     @RequestMapping(value = "/update", method = RequestMethod.PUT, headers = "Accept=application/json")
     @ResponseStatus(HttpStatus.OK)
     public void updateDepartment(@RequestBody Department department) {
+        logger.debug("called updateDepartment, method PUT");
         departmentService.update(department);
     }
 
@@ -88,6 +94,7 @@ public class DepartmentTemplateController {
     @RequestMapping(value = "/delete/{departmentId}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
     public String deleteDepartment(@PathVariable(value = "departmentId") int departmentId) {
+        logger.debug("called deleteDepartment, method DELETE");
         departmentService.delete(departmentId);
         return "/department/delete";
     }
@@ -95,6 +102,8 @@ public class DepartmentTemplateController {
     @RequestMapping(value = "averageSalary", method = RequestMethod.GET, headers = "Accept=application/json")
     @ResponseStatus(HttpStatus.OK)
     public ModelAndView averageSalary() {
+        logger.debug("called averageSalary, method GET");
+
         List<AvgSalary> salaries = departmentService.averageSalary();
 
         ModelAndView mv = new ModelAndView("/department/common");
@@ -107,9 +116,9 @@ public class DepartmentTemplateController {
     }
 
     @ExceptionHandler
-    @ResponseStatus(value = HttpStatus.FORBIDDEN, reason = "FORBIDDEN ACCESS (PROVIDE YOUR CUSTOM REASON HERE)")
+    @ResponseStatus(value = HttpStatus.FORBIDDEN, reason = "FORBIDDEN ACCESS")
     public void handleException(Exception ex) {
-        System.out.println("@RestTemplateControllerExample handleException");
+        System.out.println("@DepartmentTemplateController handleException");
         System.out.println(ex);
     }
 
