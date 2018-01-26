@@ -1,6 +1,6 @@
 <!-- Page Content -->
 <form action="#" id="form_create" >
-    <table>
+    <table class="table table-hover">
         <tbody>
         <tr>
             <td><input type="text" name="fio" placeholder="fio"></td>

@@ -1,12 +1,12 @@
 
 <form id="form_search" action="#">
-    <input id="from" type="text" name="from">
-    <input id="to" type="text" name="to">
+    <input id="from" type="text" name="from" placeholder="form or exact date">
+    <input id="to" type="text" name="to" placeholder="to">
     <button id="btn_search">Search</button>
 </form>
 
 <!-- Page Content -->
-    <table border="1" width="300">
+    <table class="table table-hover">
         <thead>
         <tr>
             <th>id</th>

@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- Page Content -->
 
-    <table>
+    <table class="table table-hover">
         <thead>
         <tr>
             <th>Name</th>
@@ -12,8 +12,8 @@
         <c:forEach var="salary" items="${result}">
             <tr>
 
-                <td><input type="text" class="department" name="department" readonly="true" value="${salary.department}"></td>
-                <td><input type="text" class="avgsalary" name="avgsalary" value="${salary.avgSalary}"></td>
+                <td>${salary.department}</td>
+                <td>${salary.avgSalary}</td>
 
             </tr>
         </c:forEach>

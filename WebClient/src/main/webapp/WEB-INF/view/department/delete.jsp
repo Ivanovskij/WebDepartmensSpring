@@ -1,6 +1,6 @@
 <!-- Page Content -->
 <form id="form_delete" action="#">
-    <table>
+    <table class="table table-hover">
         <thead>
         <tr>
             <th>id</th>
@@ -11,8 +11,8 @@
         <tbody>
             <c:forEach var="department" items="${result}">
                 <tr>
-                    <td><input class="departmentId" type="text" name="id" value="${department.id}"></td>
-                    <td><input type="text" name="name_dep" value="${department.name_dep}"></td>
+                    <td><input class="departmentId" size="5" disabled value="${department.id}"></td>
+                    <td>${department.name_dep}</td>
                     <td><button class="btn_delete">delete</button></td>
                 </tr>
             </c:forEach>
