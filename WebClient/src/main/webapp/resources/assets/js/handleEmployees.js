@@ -18,14 +18,40 @@ $(document).ready(function() {
         $.ajax({
             url: url,
             type: 'GET',
-            contentType: 'application/json', // тот тип контента, который вы будете получать от своего сервиса
-            headers: { }, // Разные заголовки, нестандартные заголовки, не забудте их указать в Access-Control-Allow-Headers
+            contentType: 'application/json',
+            headers: { }, // Разные заголовки, нестандартные заголовки
             success: function (res) {
                 $("#body").html(res);
             },
-            error: function () { console.log("Error"); },
+            error: function (res) {
+                console.log(res);
+                $("#ajaxResponse").html("error search");
+            },
 
             dataType: "html"
+        });
+    });
+
+    $("#btn_create").click(function(e) {
+        e.preventDefault();
+
+        var $form_create = $("#form_create");
+        var jsonObject = $form_create.serializeObject();
+
+        $.ajax({
+            url: URL_TO_MAPPING_CLIENT + "/create",
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(jsonObject),
+            headers: { }, // Разные заголовки, нестандартные заголовки
+            success: function (res) {
+                console.log("success created");
+                $("#ajaxResponse").html("success created");
+            },
+            error: function (res) {
+                console.log(res);
+                $("#ajaxResponse").html("error created");
+            }
         });
     });
 
@@ -35,19 +61,18 @@ $(document).ready(function() {
 
         var employeeId = $(this).closest("tr").find("input.employeeId").val();
 
-        /*var request = new XMLHttpRequest();
-        request.open("DELETE", "/departments/delete/" + departmentId);
-        request.send();*/
-
         $.ajax({
             url: URL_TO_MAPPING_CLIENT + "/delete/" + employeeId,
             type: 'DELETE',
-            contentType: 'application/json', // тот тип контента, который вы будете получать от своего сервиса
-            headers: { }, // Разные заголовки, нестандартные заголовки, не забудте их указать в Access-Control-Allow-Headers
+            contentType: 'application/json',
+            headers: { }, // Разные заголовки, нестандартные заголовки
             success: function (res) {
-                console.log(res);
+                $("#ajaxResponse").html("success deleted, please refresh page");
             },
-            error: function () { console.log("Error"); }
+            error: function () {
+                console.log(res);
+                $("#ajaxResponse").html("error deleted");
+            }
         });
     });
 
@@ -72,15 +97,17 @@ $(document).ready(function() {
         $.ajax({
             url: URL_TO_MAPPING_CLIENT + "/update",
             type: 'PUT',
-            contentType: 'application/json', // тот тип контента, который вы будете получать от своего сервиса
+            contentType: 'application/json',
             data: JSON.stringify(jsonObject),
-            headers: { }, // Разные заголовки, нестандартные заголовки, не забудте их указать в Access-Control-Allow-Headers
+            headers: { }, // Разные заголовки, нестандартные заголовки
             success: function (res) {
-                console.log(res);
+                console.log("success updated");
+                $("#ajaxResponse").html("success updated");
             },
-            error: function (res) { console.log(res); },
-
-            dataType: "json"
+            error: function (res) {
+                console.log(res);
+                $("#ajaxResponse").html("error updated");
+            }
         });
     });
 });

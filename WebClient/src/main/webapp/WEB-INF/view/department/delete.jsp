@@ -18,7 +18,7 @@
             </c:forEach>
         </tbody>
     </table>
-
-    <div id="ajaxResponse"></div>
 </form>
+
+<div id="ajaxResponse"></div>
 <!-- /.container -->

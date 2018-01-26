@@ -30,3 +30,5 @@
     </table>
     <!-- /.container -->
 
+<div id="ajaxResponse"></div>
+

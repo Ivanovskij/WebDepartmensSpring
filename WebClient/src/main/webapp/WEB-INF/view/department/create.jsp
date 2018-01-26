@@ -1,7 +1,8 @@
-<form action="/departments//create" method="post" >
+<form id="form_create" action="#" >
 <pre>
     <label for="name_dep">Name:</label>
     <input id="name_dep" type="text" name="name_dep" />
-    <input type="submit" value="Submit" />
+    <button id="btn_create">Create</button>
 </pre>
 </form>
+<div id="ajaxResponse"></div>

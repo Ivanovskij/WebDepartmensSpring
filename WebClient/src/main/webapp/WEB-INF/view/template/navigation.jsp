@@ -8,7 +8,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <c:url value="${contextRoot}" var="home"/>
+            <c:url value="/" var="home"/>
             <a class="navbar-brand" href="${home}">Home</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->

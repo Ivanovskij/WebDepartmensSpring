@@ -1,5 +1,5 @@
 <!-- Page Content -->
-<form action="/employees/create" method="post" >
+<form action="#" id="form_create" >
     <table>
         <tbody>
         <tr>
@@ -7,9 +7,11 @@
             <td><input type="text" name="dateOfBirth" placeholder="date_of_birth"></td>
             <td><input type="text" name="salary" placeholder="salary"></td>
             <td><input type="text" name="department" placeholder="department" value="Sales"></td>
-            <td><button id="post_create">+</button></td>
+            <td><button id="btn_create">+</button></td>
         </tr>
         </tbody>
     </table>
 </form>
+
+<div id="ajaxResponse"></div>
 <!-- /.container -->

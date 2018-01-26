@@ -2,6 +2,29 @@ $(document).ready(function() {
 
     var URL_TO_MAPPING_CLIENT = "http://localhost:8084/departments";
 
+    $("#btn_create").click(function(e) {
+        e.preventDefault();
+
+        var $form_create = $("#form_create");
+        var jsonObject = $form_create.serializeObject();
+
+        $.ajax({
+            url: URL_TO_MAPPING_CLIENT + "/create",
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(jsonObject),
+            headers: { }, // Разные заголовки, нестандартные заголовки
+            success: function (res) {
+                console.log("success created");
+                $("#ajaxResponse").html("success created");
+            },
+            error: function (res) {
+                console.log(res);
+                $("#ajaxResponse").html("error created");
+            }
+        });
+    });
+
     $(".btn_delete").click(function(e) {
         e.preventDefault();
 
@@ -14,12 +37,15 @@ $(document).ready(function() {
         $.ajax({
             url: URL_TO_MAPPING_CLIENT + "/delete/" + departmentId,
             type: 'DELETE',
-            contentType: 'application/json', // тот тип контента, который вы будете получать от своего сервиса
-            headers: { }, // Разные заголовки, нестандартные заголовки, не забудте их указать в Access-Control-Allow-Headers
-            success: function (res) {
-                console.log(res);
+            contentType: 'application/json',
+            headers: { }, // Разные заголовки, нестандартные заголовки
+            success: function () {
+                $("#ajaxResponse").html("success deleted, please refresh page");
             },
-            error: function () { console.log("Error"); }
+            error: function (res) {
+                console.log(res);
+                $("#ajaxResponse").html("error deleted");
+            }
         });
     });
 
@@ -37,15 +63,17 @@ $(document).ready(function() {
         $.ajax({
             url: URL_TO_MAPPING_CLIENT + "/update",
             type: 'PUT',
-            contentType: 'application/json', // тот тип контента, который вы будете получать от своего сервиса
+            contentType: 'application/json',
             data: JSON.stringify(jsonObject),
-            headers: { }, // Разные заголовки, нестандартные заголовки, не забудте их указать в Access-Control-Allow-Headers
+            headers: { }, // Разные заголовки, нестандартные заголовки
             success: function (res) {
-                console.log(res);
+                console.log("success updated");
+                $("#ajaxResponse").html("success updated");
             },
-            error: function (res) { console.log(res); },
-
-            dataType: "json"
+            error: function (res) {
+                console.log(res);
+                $("#ajaxResponse").html("error updated");
+            }
         });
     });
 });

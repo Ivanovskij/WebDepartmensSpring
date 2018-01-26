@@ -2,6 +2,8 @@ package com.ivo.webclient.mvc.exception;
 
 public class CustomException extends RuntimeException {
 
+    private static final long serialVersionUID = 1L;
+
     private String errCode;
     private String errMsg;
 

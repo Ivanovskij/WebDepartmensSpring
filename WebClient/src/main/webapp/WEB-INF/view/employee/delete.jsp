@@ -24,4 +24,6 @@
         </tbody>
     </table>
 </form>
+
+<div id="ajaxResponse"></div>
 <!-- /.container -->

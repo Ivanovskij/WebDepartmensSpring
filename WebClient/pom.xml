@@ -24,7 +24,7 @@
         <slf4j.version>1.7.13</slf4j.version>
 
         <!-- jackson json JSON Processing API -->
-        <jackson.databind-version>2.2.3</jackson.databind-version>
+        <jackson.databind-version>2.6.3</jackson.databind-version>
 
         <!-- Web -->
         <jsp.version>2.2</jsp.version>

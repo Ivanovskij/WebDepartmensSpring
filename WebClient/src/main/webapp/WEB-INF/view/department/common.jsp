@@ -40,7 +40,7 @@
 
 </head>
 
-<body>
+<body id="body">
 
     <!-- Navigation -->
     <%@include file="../template/navigation.jsp" %>
@@ -111,6 +111,7 @@
     <!-- my scripts -->
     <script src="${contextPath}/${js}/handleDepartments.js"></script>
     <script src="${contextPath}/${js}/navigation.js"></script>
+    <script src="${contextPath}/${js}/formToJSON.js"></script>
 </body>
 
 </html>

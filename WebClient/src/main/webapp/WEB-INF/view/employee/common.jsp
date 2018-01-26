@@ -105,6 +105,7 @@
     <!-- my scripts -->
     <script src="${contextPath}/${js}/handleEmployees.js"></script>
     <script src="${contextPath}/${js}/navigation.js"></script>
+    <script src="${contextPath}/${js}/formToJSON.js"></script>
 </body>
 
 </html>

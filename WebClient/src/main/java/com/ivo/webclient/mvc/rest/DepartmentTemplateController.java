@@ -50,11 +50,11 @@ public class DepartmentTemplateController {
         return mv;
     }
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String createDepartment(Department department) {
+    @RequestMapping(value = "/create", method = RequestMethod.POST, headers = "Accept=application/json")
+    public void createDepartment(@RequestBody Department department) {
         logger.debug("called createDepartment, method POST");
         departmentService.create(department);
-        return "/department/create";
+        logger.debug("create " + department);
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.GET)
@@ -89,10 +89,9 @@ public class DepartmentTemplateController {
     }
 
     @RequestMapping(value = "/delete/{departmentId}", method = RequestMethod.DELETE)
-    public String deleteDepartment(@PathVariable(value = "departmentId") int departmentId) {
+    public void deleteDepartment(@PathVariable(value = "departmentId") int departmentId) {
         logger.debug("called deleteDepartment, method DELETE");
         departmentService.delete(departmentId);
-        return "/department/delete";
     }
 
     @RequestMapping(value = "averageSalary", method = RequestMethod.GET, headers = "Accept=application/json")
@@ -112,7 +111,7 @@ public class DepartmentTemplateController {
 
     @ExceptionHandler(CustomException.class)
     public ModelAndView handleCustomException(CustomException ex) {
-        ModelAndView mv = new ModelAndView("errors/error");
+        ModelAndView mv = new ModelAndView("/errors/error");
         mv.addObject("errCode", ex.getErrCode());
         mv.addObject("errMsg", ex.getErrMsg());
         return mv;
@@ -120,7 +119,7 @@ public class DepartmentTemplateController {
 
     @ExceptionHandler(Exception.class)
     public ModelAndView handleAllException(Exception ex) {
-        ModelAndView mv = new ModelAndView("errors/error");
+        ModelAndView mv = new ModelAndView("/errors/error");
         mv.addObject("errMsg", ex.getMessage());
         return mv;
     }

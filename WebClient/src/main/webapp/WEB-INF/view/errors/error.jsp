@@ -2,8 +2,8 @@
 <html>
 <body>
 
-<c:set value="${pageContext.request.contextPath}" var="contextPath"/>
-<c:url value="${contextPath}" var="home"/>
+<c:set value="/" var="home"/>
+<c:url value="${home}" var="home"/>
 
 <a href="${home}">Go to home</a>
 

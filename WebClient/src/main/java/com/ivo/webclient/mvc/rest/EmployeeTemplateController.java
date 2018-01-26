@@ -50,11 +50,11 @@ public class EmployeeTemplateController {
         return mv;
     }
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String createEmployee(Employee employee) {
+    @RequestMapping(value = "/create", method = RequestMethod.POST, headers = "Accept=application/json")
+    public void createEmployee(@RequestBody Employee employee) {
         logger.debug("called createEmployee, method POST");
         employeeService.create(employee);
-        return "/employee/create";
+        logger.debug("create Employee: " + employee);
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.GET)
@@ -89,10 +89,9 @@ public class EmployeeTemplateController {
     }
 
     @RequestMapping(value = "/delete/{employeeId}", method = RequestMethod.DELETE)
-    public String deleteDepartment(@PathVariable(value = "employeeId") int employeeId) {
+    public void deleteDepartment(@PathVariable(value = "employeeId") int employeeId) {
         logger.debug("called deleteDepartment, method DELETE");
         employeeService.delete(employeeId);
-        return "/employee/delete";
     }
 
     @RequestMapping(value = "/search/{dateOfBirth}", method = RequestMethod.GET)
