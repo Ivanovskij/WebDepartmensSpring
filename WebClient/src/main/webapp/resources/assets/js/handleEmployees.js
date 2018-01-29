@@ -84,7 +84,8 @@ $(document).ready(function() {
         var fio = $(this).closest("tr").find("input.fio").val();
         var dateOfBirth = $(this).closest("tr").find("input.dateOfBirth").val();
         var salary = $(this).closest("tr").find("input.salary").val();
-        var department = $(this).closest("tr").find("input.department").val();
+        var department = $(this).closest("tr").find("select").val();
+        alert(department);
 
         var jsonObject = {
             "id" : employeeId,

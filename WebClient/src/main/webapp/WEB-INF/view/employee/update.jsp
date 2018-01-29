@@ -17,7 +17,13 @@
                 <td><input class="fio" type="text" name="fio" value="${emp.fio}"></td>
                 <td><input class="dateOfBirth" type="text" name="dateOfBirth" value="${emp.dateOfBirth}"></td>
                 <td><input class="salary" type="text" size="5" name="salary" value="${emp.salary}"></td>
-                <td><input class="department" type="text" name="department" value="${emp.department}"></td>
+                <td>
+                    <select name="department">
+                        <c:forEach items="${departments}" var="dep">
+                            <option class="department" value="${dep.name_dep}">${dep.name_dep}</option>
+                        </c:forEach>
+                    </select>
+                </td>
                 <td><button class="btn_update">Edit</button></td>
             </tr>
         </c:forEach>

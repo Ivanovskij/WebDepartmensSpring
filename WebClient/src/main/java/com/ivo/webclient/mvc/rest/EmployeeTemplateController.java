@@ -1,7 +1,9 @@
 package com.ivo.webclient.mvc.rest;
 
 import com.ivo.webclient.mvc.exception.CustomException;
+import com.ivo.webclient.mvc.model.Department;
 import com.ivo.webclient.mvc.model.Employee;
+import com.ivo.webclient.mvc.service.DepartmentService;
 import com.ivo.webclient.mvc.service.EmployeeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +24,9 @@ public class EmployeeTemplateController {
 
     @Autowired
     EmployeeService employeeService;
+
+    @Autowired
+    DepartmentService departmentService;
 
     @RequestMapping(value = "/{employeeId}", method = RequestMethod.GET, headers = "Accept=application/json")
     public ModelAndView read(@PathVariable int employeeId) {
@@ -45,6 +50,10 @@ public class EmployeeTemplateController {
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public ModelAndView create() {
         ModelAndView mv = new ModelAndView("/employee/common");
+
+        List<Department> departments = departmentService.list();
+        mv.addObject("departments", departments);
+
         mv.addObject("title", "create");
         mv.addObject("userClickCreate", true);
         return mv;
@@ -61,9 +70,12 @@ public class EmployeeTemplateController {
     public ModelAndView update() {
         ModelAndView mv = new ModelAndView("/employee/common");
 
-        List<Employee> departments = employeeService.list();
+        List<Department> departments = departmentService.list();
+        mv.addObject("departments", departments);
+
+        List<Employee> employees = employeeService.list();
         mv.addObject("title", "update");
-        mv.addObject("result", departments);
+        mv.addObject("result", employees);
 
         mv.addObject("userClickUpdate", true);
         return mv;

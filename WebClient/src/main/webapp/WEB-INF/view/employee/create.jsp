@@ -6,7 +6,13 @@
             <td><input type="text" name="fio" placeholder="fio"></td>
             <td><input type="text" name="dateOfBirth" placeholder="date_of_birth"></td>
             <td><input type="text" name="salary" placeholder="salary"></td>
-            <td><input type="text" name="department" placeholder="department" value="Sales"></td>
+            <td>
+                <select name="department" id="select">
+                    <c:forEach items="${departments}" var="dep">
+                        <option value="${dep.name_dep}">${dep.name_dep}</option>
+                    </c:forEach>
+                </select>
+            </td>
             <td><button id="btn_create">+</button></td>
         </tr>
         </tbody>
