@@ -10,4 +10,5 @@ simply test task with: Maven, Spring MVC, JUnit, Slf4j.
 2. put on the webserver tomcat in directory webapps two war files.
 3. run tomcat.
 
-
+[webservice]: ./webservice/
+[webclient]: ./webclient/
